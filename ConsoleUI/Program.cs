@@ -1,6 +1,7 @@
 ﻿using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,23 +13,16 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            List<Car> _cars = carManager.GetAll();
 
-            void MyList(string listTitle)
+            foreach (CarDetailDto car in carManager.GetCarDetails())
             {
-                Console.WriteLine("\n\n" + listTitle.ToUpper());
-                foreach (var item in carManager.GetAll())
-                {
-                    Console.WriteLine(item.Id + item.BrandId + item.ColorId + item.Name + item.ModelYear + item.DailyPrice + item.Description);
-                }
+                Console.WriteLine("{0} model, {1} {2} Günlük Ücret : {3} / Renk : {4}", car.ModelYear, car.BrandName, car.Description, car.DailyPrice, car.ColorName);
             }
-
-            MyList("Cars"); // İlk liste
-
-
+            carManager.Add(new Car { BrandId = 4, DailyPrice = 550, Description = "wmb", ColorId = 1, ModelYear = 2017 });
         }
-    }
+    }  
 }
+    
 
 
 

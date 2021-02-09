@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,9 +25,16 @@ namespace Business.Concrete
             }
             else
             {
-                Console.WriteLine("\nCar name must be more than one character !!!".ToUpper());
+                Console.WriteLine("\nCar name must be more than one character!".ToUpper());
             }
         }
+
+        public IEnumerable<CarDetailDto> GetCarDetails()
+        {
+            throw new NotImplementedException();
+        }
+
+        
 
         public void Delete(Car car)
         {
@@ -40,8 +48,14 @@ namespace Business.Concrete
 
         public List<Car> GetById(int car_id)
         {
-            return _carDal.GetAll(p => p.Id == car_id);
+            return _carDal.GetAll(p => p.CarId == car_id);
         }
+
+        public List<CarDetailDto> GetCarDetailDto()
+        {
+            return _carDal.GetCarDetailDtos();
+        }
+
         public void Update(Car car)
         {
             if (car.Name.Length >= 2)

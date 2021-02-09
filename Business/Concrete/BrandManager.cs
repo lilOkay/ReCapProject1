@@ -33,7 +33,7 @@ namespace Business.Concrete
 
         public List<Brand> GetById(int brand_id)
         {
-            return _brandDal.GetAll(p => p.Id == brand_id);
+            return _brandDal.GetAll(p => p.BrandId == brand_id);
         }
 
         public void Update(Brand brand)
