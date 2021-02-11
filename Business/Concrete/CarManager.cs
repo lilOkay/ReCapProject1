@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dtos;
@@ -17,55 +19,71 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
-            if (car.Name.Length >= 2)
+            if (car.CarName.Length<2)
             {
-                _carDal.Add(car);
+                return new ErrorResult(Messages.CarNameInvalid);
             }
-            else
-            {
-                Console.WriteLine("\nCar name must be more than one character!".ToUpper());
-            }
-        }
-
-        public IEnumerable<CarDetailDto> GetCarDetails()
-        {
-            throw new NotImplementedException();
+            _carDal.Add(car);
+            return new SuccesResult(Messages.CarAdded);//eğer biz bunu yapmazsak Add bize kızar bizden bir şey dödürmemizi ister
         }
 
         
 
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             _carDal.Delete(car);
+            return new SuccesResult(Messages.CarDeleted);
         }
 
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
-            return _carDal.GetAll();
-        }
-
-        public List<Car> GetById(int car_id)
-        {
-            return _carDal.GetAll(p => p.CarId == car_id);
-        }
-
-        public List<CarDetailDto> GetCarDetailDto()
-        {
-            return _carDal.GetCarDetailDtos();
-        }
-
-        public void Update(Car car)
-        {
-            if (car.Name.Length >= 2)
+            if (DateTime.Now.Hour == 22)
             {
-                _carDal.Update(car);
+                return new ErrorDataResult<List<Car>>(Messages.MaintananceTime);
+            }
+
+            //ben dataresult dödürüyorum çalıştığım tip <List<Car>>dır _carDal.GetAll()buda dödürdüğümd atadır truede işlem sonucu  "ürünler listelendi"ise kullanıcı bilgilendirici messajdır
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarsListed);
+        }
+
+
+
+        public IResult Update(Car car)
+        {
+            if (car.CarName.Length >= 2)
+            {
+                return new ErrorResult(Messages.CarNameInvalid);
             }
             else
             {
-                Console.WriteLine("Car name must be more than one character");
+                _carDal.Update(car);
+                return new SuccesResult(Messages.CarUpdated);
             }
         }
+
+        public IDataResult<Car> GetById(int car_id)
+        {
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == car_id));
+        }
+
+        public IDataResult<List<Car>> GetByBrandId(int brand_id)
+        {
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == brand_id));
+        }
+
+        public IDataResult<List<Car>> GetByColorId(int color_id)
+        {
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c0 => c0.BrandId == color_id));
+        }
+
+        
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
+        }
+
+        
     }
 }
