@@ -26,7 +26,7 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.CarNameInvalid);
             }
             _carDal.Add(car);
-            return new SuccesResult(Messages.CarAdded);//eğer biz bunu yapmazsak Add bize kızar bizden bir şey dödürmemizi ister
+            return new SuccessResult(Messages.CarAdded);//eğer biz bunu yapmazsak Add bize kızar bizden bir şey dödürmemizi ister
         }
 
         
@@ -34,7 +34,7 @@ namespace Business.Concrete
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
-            return new SuccesResult(Messages.CarDeleted);
+            return new SuccessResult(Messages.CarDeleted);
         }
 
         public IDataResult<List<Car>> GetAll()
@@ -59,7 +59,7 @@ namespace Business.Concrete
             else
             {
                 _carDal.Update(car);
-                return new SuccesResult(Messages.CarUpdated);
+                return new SuccessResult(Messages.CarUpdated);
             }
         }
 
