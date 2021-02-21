@@ -10,17 +10,17 @@
 //{
 //    public class InMemoryCarDal : ICarDal
 //    {
-        
-//            List<Car> _car;
-        
+
+//        List<Car> _car;
+
 //        public InMemoryCarDal()
 //        {
 //            _car = new List<Car>
 //            {
-//                new Car{ Id=1, BrandId=1, ColorId=2, ModelYear=2010, DailyPrice=307, Description="Hatchback"},
-//                new Car{ Id=2, BrandId=2, ColorId=1, ModelYear=2017, DailyPrice=940, Description="Sport"},
-//                new Car{ Id=3, BrandId=3, ColorId=1, ModelYear=2015, DailyPrice=490, Description="Arazi"},
-//                new Car{ Id=4, BrandId=1, ColorId=1, ModelYear=2020, DailyPrice=1050, Description="Sedan"},
+//                new Car{ CarId=1, BrandId=1, ColorId=2, ModelYear=2010, DailyPrice=307, Description="Hatchback"},
+//                new Car{ CarId=2, BrandId=2, ColorId=1, ModelYear=2017, DailyPrice=940, Description="Sport"},
+//                new Car{ CarId=3, BrandId=3, ColorId=1, ModelYear=2015, DailyPrice=490, Description="Arazi"},
+//                new Car{ CarId=4, BrandId=1, ColorId=1, ModelYear=2020, DailyPrice=1050, Description="Sedan"},
 //            };
 //        }
 //        public void Add(Car car)
@@ -29,7 +29,7 @@
 //        }
 //        public void Delete(Car car)
 //        {
-//            Car carToDelete = _car.SingleOrDefault(p => p.Id == car.Id);
+//            Car carToDelete = _car.SingleOrDefault(p => p.CarId == car.Id);
 //            _car.Remove(car);
 //        }
 
@@ -55,8 +55,8 @@
 
 //        public void Update(Car car)
 //        {
-//            Car carToUpdate = _car.SingleOrDefault(p => p.Id == car.Id);
-//            carToUpdate.Id = car.Id;
+//            Car carToUpdate = _car.SingleOrDefault(p => p.CarId == car.d);
+//            carToUpdate.CarId = car.CarId;
 //            carToUpdate.BrandId = car.BrandId;
 //            carToUpdate.ColorId = car.ColorId;
 //            carToUpdate.DailyPrice = car.DailyPrice;
