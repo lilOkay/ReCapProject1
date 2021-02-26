@@ -51,5 +51,7 @@ namespace Business.Constants
         public static string EditCustomerMessage = "Müşteri başarıyla güncellendi.";
         public static string GetSuccessCustomerMessage = "Müşteri bilgisi / bilgileri getirildi.";
         public static string GetErrorCustomerMessage = "Müşteri bilgisi / bilgileri getirilemedi.";
+        public static string ImageAdded = "resim eklendi";
+        public static string OutOfImageLimit = "Resim limitine erişildi!";
     }
 }
