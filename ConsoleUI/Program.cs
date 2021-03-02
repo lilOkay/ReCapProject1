@@ -14,14 +14,14 @@ namespace ConsoleUI
         {
             //gun9();
 
-            UserManager userManager = new UserManager(new EfUserDal());
-            userManager.Add(new User()
-            {FirstName = "Okay ",LastName = "Genc",Email = "ogenc192@gmail.com",Password = "asdfg"});
+            //UserManager userManager = new UserManager(new EfUserDal());
+            //userManager.Add(new User();
+            ////{FirstName = "Okay ",LastName = "Genc",Email = "ogenc192@gmail.com",Password = "asdfg"});
 
-            foreach (var user in userManager.GetAll().Data)
-            {
-                Console.WriteLine($"{user.Id}, {user.FirstName} {user.LastName}, {user.Email}");
-            }
+            //foreach (var user in userManager.GetAll().Data)
+            //{
+            //    Console.WriteLine($"{user.Id}, {user.FirstName} {user.LastName}, {user.Email}");
+            //}
 
             Console.WriteLine("---------Add Customer---------");
             CustomerManager customerManager = new CustomerManager(new EfCustomerDal());

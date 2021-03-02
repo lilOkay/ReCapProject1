@@ -1,6 +1,7 @@
 ﻿using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Business.Constants
@@ -53,5 +54,16 @@ namespace Business.Constants
         public static string GetErrorCustomerMessage = "Müşteri bilgisi / bilgileri getirilemedi.";
         public static string ImageAdded = "resim eklendi";
         public static string OutOfImageLimit = "Resim limitine erişildi!";
+        public static string AuthorizationDenied="";
+        public static string AccessTokenCreated="";
+        public static string UserAlreadyExists="Kullanıcı zaten var";
+        public static string SuccessfulLogin="Başarıya giriş yapıldı";
+        public static string UserNotFound="KUllanıcı bulunamadı";
+        public static string PasswordError="Şifre hatalı";
+        public static string UserRegistered="kullanıcı kayıt edildi";
+        public static string UserDeleted="Kullanıcı silindi";
+        public static string UsersListed="Kullanıcılar listelendi";
+        public static string UserUpdated="Kullanıcı güncellendi";
+        public static string UserAdded="Kullanıcı eklendi";
     }
 }

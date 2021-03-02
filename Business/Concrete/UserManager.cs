@@ -2,6 +2,7 @@
 using Business.Abstract;
 using Business.Constants;
 using Core.Aspects.Autofac.Validation;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -19,62 +20,38 @@ namespace Business.Concrete
         {
             _userDal = userDal;
         }
-        [ValidationAspect(typeof(UserValidator))]
-        public IResult Add(User entity)
+
+        public List<OperationClaim> GetClaims(User user)
         {
-            _userDal.Add(entity);
-            return new SuccessResult(Messages.AddUserMessage);
+            return _userDal.GetClaims(user);
         }
 
-        public IResult Delete(User entity)
+        public IResult Add(User user)
         {
-            _userDal.Delete(entity);
-            return new SuccessResult(Messages.DeleteUserMessage);
+            _userDal.Add(user);
+            return new SuccessResult(Messages.UserAdded);
         }
 
-        public DataResult<User> Get(int id)
+        public User GetByMail(string email)
         {
-            User user = _userDal.Get(p => p.Id == id);
-            if (user == null)
-            {
-                return new ErrorDataResult<User>(Messages.GetErrorUserMessage);
-            }
-            else
-            {
-                return new SuccessDataResult<User>(user, Messages.GetSuccessUserMessage);
-            }
+            return _userDal.Get(u => u.Email == email);
         }
 
-        public DataResult<List<User>> GetAll()
+        public IDataResult<List<User>> GetAll()
         {
-            List<User> users = _userDal.GetAll();
-            if (users.Count == 0)
-            {
-                return new ErrorDataResult<List<User>>(Messages.GetErrorUserMessage);
-            }
-            else
-            {
-                return new SuccessDataResult<List<User>>(Messages.GetSuccessUserMessage);
-            }
+            return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.UsersListed);
         }
 
-        public DataResult<User> GetByEmail(string email)
+        public IResult Update(User user)
         {
-            User user = _userDal.Get(p => p.Email == email);
-            if (user==null)
-            {
-                return new ErrorDataResult<User>(Messages.GetErrorUserMessage);
-            }
-            else
-            {
-                return new SuccessDataResult<User>(Messages.GetSuccessUserMessage);
-            }
+            _userDal.Update(user);
+            return new SuccessResult(Messages.UserUpdated);
         }
 
-        public IResult Update(User entity)
+        public IResult Delete(User user)
         {
-            _userDal.Update(entity);
-            return new SuccessResult(Messages.EditUserMessage);
+            _userDal.Delete(user);
+            return new SuccessResult(Messages.UserDeleted);
         }
     }
 }
