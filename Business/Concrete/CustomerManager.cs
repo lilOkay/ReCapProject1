@@ -1,6 +1,8 @@
 ﻿using Buisness.ValidationRules.FluentValidation;
 using Business.Abstract;
 using Business.Constants;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -20,18 +22,22 @@ namespace Business.Concrete
             _customerDal = customerDal;
         }
         [ValidationAspect(typeof(CustomerValidator))]
+        [TransactionScopeAspect]
+        [CacheRemoveAspect("ICustomerService.Get")]
         public IResult Add(Customer entity)
         {
             _customerDal.Add(entity);
             return new SuccessResult(Messages.AddCustomerMessage);
         }
-
+        [TransactionScopeAspect]
+        [CacheRemoveAspect("ICustomerService.Get")]
         public IResult Delete(Customer entity)
         {
             _customerDal.Delete(entity);
             return new SuccessResult(Messages.DeleteCustomerMessage);
         }
 
+        [CacheAspect]
         public DataResult<Customer> Get(int id)
         {
             Customer customer = _customerDal.Get(p=>p.Id==id);
@@ -45,6 +51,7 @@ namespace Business.Concrete
             }
         }
 
+        [CacheAspect]
         public DataResult<List<Customer>> GetAll()
         {
             List<Customer> customers = _customerDal.GetAll();
@@ -58,6 +65,9 @@ namespace Business.Concrete
             }
         }
 
+        [ValidationAspect(typeof(CustomerValidator))]
+        [TransactionScopeAspect]
+        [CacheRemoveAspect("ICustomerService.Get")]
         public IResult Update(Customer entity)
         {
             _customerDal.Update(entity);

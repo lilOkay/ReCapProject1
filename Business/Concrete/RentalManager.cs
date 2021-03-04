@@ -1,6 +1,8 @@
 ﻿using Buisness.ValidationRules.FluentValidation;
 using Business.Abstract;
 using Business.Constants;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -19,7 +21,10 @@ namespace Business.Concrete
         {
             _rentalDal = rentalDal;
         }
+
         [ValidationAspect(typeof(RentalValidator))]
+        [TransactionScopeAspect]
+        [CacheRemoveAspect("IRentalService.Get")]
         public IResult Add(Rental entity)
         {
             var isDeliveryControl = IsDelivery(entity.CarId);
@@ -34,12 +39,15 @@ namespace Business.Concrete
             }
         }
 
+        [TransactionScopeAspect]
+        [CacheRemoveAspect("IRentalService.Get")]
         public IResult Delete(Rental entity)
         {
             _rentalDal.Delete(entity);
             return new SuccessResult(Messages.DeleteRentalMessage);
         }
 
+        [CacheAspect]
         public DataResult<Rental> Get(int id)
         {
             Rental rental = _rentalDal.Get(p => p.Id == id);
@@ -53,6 +61,7 @@ namespace Business.Concrete
             }
         }
 
+        [CacheAspect]
         public DataResult<List<Rental>> GetAll()
         {
             List<Rental> rentals = _rentalDal.GetAll();
@@ -76,6 +85,9 @@ namespace Business.Concrete
             return new SuccessDataResult<bool>(true, Messages.CarAvaible);
         }
 
+        [ValidationAspect(typeof(RentalValidator))]
+        [TransactionScopeAspect]
+        [CacheRemoveAspect("IRentalService.Get")]
         public IResult Update(Rental entity)
         {
             _rentalDal.Update(entity);

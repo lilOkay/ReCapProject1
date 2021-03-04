@@ -1,5 +1,6 @@
 ﻿using Buisness.ValidationRules.FluentValidation;
 using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Aspects.Autofac.Validation;
 using Core.Entities.Concrete;
@@ -42,6 +43,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.UsersListed);
         }
 
+        [SecuredOperation("user,admin")]
         public IResult Update(User user)
         {
             _userDal.Update(user);
